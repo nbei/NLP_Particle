@@ -91,9 +91,30 @@ get_tain_words.py: 在使用CRF训练的时候,需要用到不同的特征,这�
 
 analyse_back_forward.py: 此文件主要用来对所有的结果进行对比，生成**FINAL REPORT**
 
-prob2_testdatapre.py: 由于crf++在使用另外的特征的时候，其测试文件也需要代用响应的特征，此文件就是在重新编写测试文件
-
 **关于使用：**上面的每个文件都可以直接运行，且不需要特别的参数设置，而且在文档中已经有了对这个文件作用的详细描述。
 
+**下面说一下CRF++:**
 
+本实验中所用的crf++是从此[CRF++-0.54.tar.gz](http://sourceforge.net/projects/crfpp/files/crfpp/0.54/CRF%2B%2B-0.54.tar.gz/download)处下载的，下载之后只需要解压然后进入对应目录之后，执行如下命令即可：
 
+```basic
+./configure
+make
+sudo make install
+```
+
+注意在最后一步一定要用sudo权限去运行，否则在使用过程中会出现错误。
+
+使用CRF++比较简单，我们需要准备几个文件，一个就是`template`，里面是我们对CRF使用的模板的定义，另一个是`trainfile.utf8`，里面是我们提供的训练样本，注意这里的训练样本与之前的不同，需要人工（代码）标定特征，这样我们就可以通过训练得到对应的model：
+
+```basic
+./crf_learn -f 3 -c 4.0 template 4.trainfile.utf8 4.model 
+```
+
+最后一个4.model是我们生成的模型，之后我们可以用其去进行test，注意当我们使用更多特征的时候，我们需要对test添加其对应的feature，这部分代码已经放在了`prob2_datapre2.0.py`中，然后可以运行如下命令进行test：
+
+```basic
+./crf_test -m 4.model 4.test.data > 4.test.rst 
+```
+
+这里要注意的是，其生成的4.test.rst需要我们进一步处理才能够被icwb2使用，这一部分代码已经被放在了`prob2_tidyres.py`里面。
