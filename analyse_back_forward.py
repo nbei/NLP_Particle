@@ -4,8 +4,8 @@ import numpy as np
 
 back_res = open(r'./res_score/score_backward.txt', 'r')
 forward_res = open(r'./res_score/score_forward.txt', 'r')
-crf_res = open(r'./crf++/score_crf.txt', 'r')
-crf_4fre_res = open(r'./crf++/4tag_new.score_crf.txt', 'r')
+crf_res = open(r'./crf++/4test.score.txt', 'r')
+crf_4fre_res = open(r'./crf++/4tag_new.score.txt', 'r')
 
 back_recall = []
 back_precise = []
